@@ -2,9 +2,11 @@ from os import path
 
 dir_path = path.dirname(path.realpath(__file__))
 
+OS = 'LINUX'
+
 # Repo Clonner Config
 REPOSITORY = 'https://github.com/github/advisory-database'
-TARGET_FOLDER = path.join(dir_path, 'repo_target/')
+TARGET_FOLDER = path.join(dir_path, 'repo_target')
 
 # Kev
 KEV_URL = 'https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json'
