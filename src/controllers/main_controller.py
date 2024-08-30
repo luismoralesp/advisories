@@ -29,7 +29,7 @@ class MainController:
     self.csv_file = csvfile_handler.CsvFileHandler(config.CSV_FILE)
 
   def on_file(self, file_name, file_path):
-    with open(file_path, 'r') as json_file:
+    with open(file_path, 'r', encoding='UTF8') as json_file:
       content = json_file.read()
       json_data = json.loads(content)
 
@@ -69,7 +69,7 @@ class MainController:
     self.kev_list.load_json()
 
   def collect(self):
-    print("Colecting files...")
+    print("Collecting files...")
     self.csv_file.add_row(['Id', 'Modified', 'Published', 'Aliases', 'Severity', 'Summary', 'Details', 'KEV'])
 
     self.deep_collenter.collect(self.on_file)

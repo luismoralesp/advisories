@@ -43,7 +43,7 @@ class TestMainController(TestCase):
 
     main.on_file('my_asome_file.json', '/my/asome/path')
 
-    open.assert_called_with('/my/asome/path', 'r')
+    open.assert_called_with('/my/asome/path', 'r', encoding='UTF8')
     read = open.return_value.__enter__().read
     
     read.assert_called_with()
