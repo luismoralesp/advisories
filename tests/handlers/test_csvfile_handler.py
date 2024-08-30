@@ -1,13 +1,13 @@
 from unittest import TestCase
 from unittest.mock import patch
 
+from src.handlers.csvfile_handler import CsvFileHandler
+
 class TestCsvFileHandler(TestCase):
 
   @patch('csv.writer')
   @patch('builtins.open')
   def test_add_row(self, open, writer):
-    
-    from src.handlers.CsvFileHandler import CsvFileHandler
 
     csv_file = CsvFileHandler('/my/asome/csv/file')
     csv_file.add_row(['col1', 'col2', 'col3'])

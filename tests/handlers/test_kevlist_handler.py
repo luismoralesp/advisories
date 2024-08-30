@@ -1,32 +1,24 @@
 from unittest import TestCase
 from unittest.mock import patch
 
+from src.handlers.kevlist_handler import KevListHandler
+
 class TestKevListHandler(TestCase):
 
-  @classmethod
-  def setUpClass(cls):
-    cls.urlopen = patch('urllib.request.urlopen').start()
-  
-  def tearDown(self):
-    patch.stopall()
-
+  @patch('urllib.request.urlopen')
   @patch('json.loads')
-  def test_load_json(self, loads):
-    
-    from src.handlers.KevListHandler import KevListHandler
+  def test_load_json(self, loads, urlopen):
 
     kev_list = KevListHandler('https://my/asome/url/')
     kev_list.load_json()
 
-    self.urlopen.assert_called_with('https://my/asome/url/')
-    self.urlopen.return_value.read.assert_called_with()
+    urlopen.assert_called_with('https://my/asome/url/')
+    urlopen.return_value.read.assert_called_with()
 
-    loads.assert_called_with(self.urlopen.return_value.read.return_value)
+    loads.assert_called_with(urlopen.return_value.read.return_value)
     self.assertEqual(kev_list.__dict__['_KevListHandler__data'], loads.return_value)
 
   def test_exists(self):
-    from src.handlers.KevListHandler import KevListHandler
-
     kev_list = KevListHandler('https://my/asome/url/')
     kev_list.__dict__['_KevListHandler__data'] = {'vulnerabilities': [{'cveID': 'right_id'}]}
 

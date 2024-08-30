@@ -1,4 +1,4 @@
-from urllib.request import urlopen 
+from urllib import request 
 import json
 
 """
@@ -9,7 +9,7 @@ class KevListHandler:
     self.__url = url
 
   def load_json(self) -> None:
-    response = urlopen(self.__url)
+    response = request.urlopen(self.__url)
     self.__data = json.loads(response.read())
 
   def exists(self, cve_id) -> bool:

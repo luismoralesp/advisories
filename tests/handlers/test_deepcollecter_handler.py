@@ -1,6 +1,8 @@
 from unittest import TestCase
 from unittest.mock import patch, Mock, call
 
+from src.handlers.deepcollecter_handler import DeepCollecterHandler
+
 class MockedListDir:
 
   mocked_folder_data = {
@@ -36,8 +38,6 @@ class TestDeepCollectHandler(TestCase):
   @patch('os.path.isfile', new_callable=MockedIsFile)
   def test___collect(self, listdir, isfile):
 
-    from src.handlers.DeepCollecterHandler import DeepCollecterHandler
-    
     deep_collecter = DeepCollecterHandler("/my/asome/folder/")
 
     def my_func(file_name, file_path):

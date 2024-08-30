@@ -1,5 +1,5 @@
-from git import Repo
-from os.path import exists
+import git
+import os
 
 """
 RepoClonerHandler class
@@ -10,15 +10,15 @@ class RepoClonerHandler:
     self.__target_folder = target_folder
 
   def clone(self, progress) -> None:
-    Repo.clone_from(self.__repository, self.__target_folder, progress)
+    git.Repo.clone_from(self.__repository, self.__target_folder, progress)
     
   def pull(self) -> None:
-    repo = Repo(self.__target_folder)
+    repo = git.Repo(self.__target_folder)
     origin = repo.remotes.origin
     origin.pull()
 
   def clone_or_pull(self, progress) -> None:
-    if not exists(self.__target_folder):
+    if not os.path.exists(self.__target_folder):
       self.clone(progress)
     else:
       self.pull()

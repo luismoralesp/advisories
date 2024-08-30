@@ -1,5 +1,4 @@
-from os import listdir
-from os.path import isfile, join
+import os
 
 """
 DeepCollecterHandler class
@@ -9,11 +8,11 @@ class DeepCollecterHandler:
     self.__folder = folder
   
   def __collect(self, folder, func) -> None:
-    files = listdir(folder)
+    files = os.listdir(folder)
     
     for file_name in files:
-      file_path = join(folder, file_name)
-      if isfile(file_path):
+      file_path = os.path.join(folder, file_name)
+      if os.path.isfile(file_path):
         func(file_name, file_path)
       else:
         self.__collect(file_path, func)
