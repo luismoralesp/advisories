@@ -6,6 +6,7 @@ from src.handlers.RepoClonerHandler import RepoClonerHandler
 from src.handlers.DeepCollecterHandler import DeepCollecterHandler
 from src.handlers.CsvFileHandler import CsvFileHandler
 from src.handlers.ZipFileHandler import ZipFileHandler
+from src.handlers.KevListHandler import KevListHandler
 
 """
 MainController class
@@ -20,8 +21,12 @@ class MainController:
       target_folder=self.__config.TARGET_FOLDER
     )
 
-    print("Downloading...")
-    repo_cloner.clone_or_pull(self.CloneProgress())    
+    kev_list = KevListHandler(self.__config.KEV_URL)
+
+    print("Downloading from git...")
+    repo_cloner.clone_or_pull(self.CloneProgress())
+    print("Doenloading from Kev...")
+    kev_list.load_json()
 
     deep_collenter = DeepCollecterHandler(join(
       self.__config.TARGET_FOLDER,
@@ -33,8 +38,8 @@ class MainController:
     zip_file_high = ZipFileHandler(self.__config.TARGET_ZIP_FILE_HIGH)
     zip_file_critical = ZipFileHandler(self.__config.TARGET_ZIP_FILE_CRITICAL)
 
-    csv_file = CsvFileHandler(self.__config.CSV_FILE)
-    csv_file.add_row(['Id', 'Modified', 'Published', 'Aliases', 'Severity', 'Summary', 'Details'])
+    csv_file = CsvFileHandler(self.__config.CSV_FILE)  
+    csv_file.add_row(['Id', 'Modified', 'Published', 'Aliases', 'Severity', 'Summary', 'Details', 'KEV'])
 
     def on_file(file_name, file_path):
       with open(file_path, 'r') as json_file:
@@ -42,15 +47,23 @@ class MainController:
         json_data = json.loads(content)
 
         severity = json_data['database_specific']['severity']
+        aliases = ','.join(json_data.get('aliases', []))
+
+        kev = ''
+        for alias in json_data.get('aliases', []):
+          if alias.startswith('CVE-'):
+            if kev_list.exists(alias):
+              kev = '1'
 
         csv_file.add_row([
           json_data.get('id', ''),
           json_data.get('modified', ''),
           json_data.get('published', ''),
-          ','.join(json_data.get('aliases', '')),
+          aliases,
           severity,
           json_data.get('summary', ''),
           json_data.get('details', ''),
+          kev
         ])
 
         if severity  == 'LOW':
