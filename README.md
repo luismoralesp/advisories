@@ -2,7 +2,9 @@
 
 ## Project Description
 
-Advisories is a script that downloads all GitHub security vulnerabilities from the GitHub Advisory Database. It then zips up the advisories by severity, creating 4 zip files for each severity category: low, moderate, high, and critical.
+Advisories is a script that downloads all GitHub security vulnerabilities from the [GitHub Advisory Database](https://github.com/advisories). It then zips up the advisories by severity, creating 4 zip files for each severity category: low, moderate, high, and critical.
+
+Aditionally this feature includes the ability to generate a CSV file that lists every vulnerability, with each row containing key attributes summarizing important details. Additionally, the CSV file includes a KEV field. If a vulnerability is listed in the C[ISA Known Exploited Vulnerabilities Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog), the KEV field is populated with a value of 1; otherwise, the field is left empty
 
 ## Installation
 
@@ -24,6 +26,14 @@ Follow these steps to install the project:
     ```bash
     pip install -r requirements.txt
     ```
+
+## Running the Application
+
+To execute the application, simply run the `main.py` file located in the root directory of the project:
+
+```bash
+python main.py
+```
 
 ## Running the Tests
 
