@@ -18,10 +18,10 @@ Follow these steps to install the project:
 
 2. **Create and activate a virtual environment (optional but recommended)**:
     ```bash
-    virtualenv env --python=python3
+    python -m virtualenv env --python=python3
     source env/bin/activate  # On Windows use `env\Scripts\activate`
     ```
-*How to install virtual env [see](https://virtualenv.pypa.io/en/latest/installation.html)*
+    *How to install virtual env [see](https://virtualenv.pypa.io/en/latest/installation.html)*
 
 3. **Install the dependencies**:
     ```bash
